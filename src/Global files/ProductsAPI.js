@@ -1,1 +1,1 @@
-export const ProductAPI = "http://localhost:9092";
+export const ProductAPI = "https://noodlecountry.herokuapp.com";

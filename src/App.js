@@ -8,15 +8,19 @@ import LoginPage from "./containers/LoginPage/LoginPage";
 import SignUpPage from "./containers/SignUpPage/SignUpPage";
 import ContactPage from "./containers/ContactPage/ContactPage";
 import ProductInfo from "./containers/ProductInfo/ProductInfo";
-import Admin from "./containers/Admin/Admin";
+import Admin from "./containers/Admin/AdminLogin";
 import Cart from "./containers/CartPage.js/Cart";
 import UserNavbar from "./containers/userNavbar/userNavbar";
 import MyOrders from "./containers/MyOrders/MyOrders";
 import Success from "./containers/PaymentSuccess/Success";
+import AdminHome from "./containers/Admin/AdminHome";
+import UserList, { EditUserInfo, UserInfo } from "./containers/Admin/UserList";
+import FoodList, { AddFoodList, EditFoodList } from "./containers/Admin/FoodList";
+import OrderList, { OrdersInfo } from "./containers/Admin/OrderList";
+import AdminNavbar from "./containers/Admin/AdminNavbar";
+import Sample from "./containers/sample";
 
 function App() {
-  const authToken = window.localStorage.getItem("authToken");
-
   return (
     <div>
       <Routes>
@@ -30,8 +34,18 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductInfo />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/myorders" element={<MyOrders />} />
         <Route path="/success" element={<Success />}/>
+        <Route path="/adminHome" element={<AdminHome />}/>
+        <Route path="/adminNavbar" element={<AdminNavbar />}/>
+        <Route path="/userList" element={<UserList />}/>
+        <Route path="/users/:id" element={<UserInfo/>}/>
+        <Route path="/orderList" element={<OrderList />}/>
+        <Route path="/orders/:id" element={<OrdersInfo/>}/>
+        <Route path="/foodList" element={<FoodList />}/>
+        <Route path="/addFoodList" element={<AddFoodList/>}/>
+        <Route path="/editFoodList/edit/:id" element={<EditFoodList/>}/>
+        <Route path="sample" element={<Sample/>}/>
+        {/* <Route path="/myorders" element={<MyOrders />} /> */}
       </Routes>
     </div>
   );

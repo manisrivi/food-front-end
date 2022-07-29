@@ -10,6 +10,7 @@ export default function UserNavbar() {
     navigate("/login");
   }
   const quantity = useSelector((state) => state.cart.quantity);
+
   return (
     <div>
       <nav class="navbar navbar-expand-lg bg-white text-center mt-1">
@@ -38,14 +39,14 @@ export default function UserNavbar() {
                   Noodles
                 </Link>
               </li>
-            <li class="nav-item">
+            {/* <li class="nav-item">
                 <Link
                   className="btn btn-outline-light bg-white border-0 fw-bold text-decoration-none text-dark MainContent_Text"
                   to="/myorders"
                 >
                   My Orders
                 </Link>
-              </li>
+              </li> */}
               <li class="nav-item">
                 <Link
                   className="btn btn-outline-light bg-white border-0 fw-bold text-decoration-none text-dark MainContent_Text"

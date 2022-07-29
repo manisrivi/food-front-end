@@ -9,10 +9,13 @@ import UserNavbar from "../userNavbar/userNavbar";
 export default function Products() {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
+  const [query, setQuery] = useState("");
+  const [isLoading, setIsLoading] =  useState(true);
   const getProducts = async () => {
     try {
       const { data } = await axios.get(`${ProductAPI}/products`);
       setProducts(data);
+      setIsLoading(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -24,9 +27,26 @@ export default function Products() {
   return (
     <div className="container">
       <UserNavbar/>
-      <p className="text-center text-danger fw-bold">-Most Popullar Items</p>
+      <div className="d-flex justify-content-between">
+      <input
+          type="text"
+          className="mx-auto rounded-2 w-25 px-4"
+          placeholder="Search food"
+          onChange={(event) => setQuery(event.target.value)}
+        />
+      <p className="text-center text-danger fw-bold mx-auto">-Most Popullar Items</p>
+      </div>
       <div className="row ms-auto">
-        {products.map((element) => (
+        <div className="text-center">
+      {isLoading && (
+            <div className="">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921"
+                alt=""
+              />
+            </div>
+          )}</div>
+        {products.filter((g) => g.name.toLowerCase().includes(query)).map((element) => (
           <ProductTemplate
             _id={element._id}
             key={element.id}

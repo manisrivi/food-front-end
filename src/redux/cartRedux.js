@@ -14,13 +14,10 @@ const cartSlice = createSlice({
       state.total += action.payload.price * action.payload.quantity;
     },
     removeProduct: (state, action) => {
+      let index = state.products.indexOf(action.payload);
       state.quantity -= 1;
-      // state.products.splice(state.products.length-1, 1)
-      const index = state.products.findIndex(
-        (product) => product._id === action.payload._id
-      );
-      state.products.filter((_, i) => i !== index);
-      state.total -= action.payload.price * action.payload.quantity;
+      state.products.splice(index, 1)
+      state.total -=  state.total / action.payload.quantity
     },
   },
 });

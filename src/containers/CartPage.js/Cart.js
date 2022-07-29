@@ -1,32 +1,44 @@
-import React, { useState,  } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import UserNavbar from "../userNavbar/userNavbar";
 import { useDispatch } from "react-redux";
 import { removeProduct } from "../../redux/cartRedux";
-
+import axios from "axios";
+import { ProductAPI } from "../../Global files/ProductsAPI";
+import { useNavigate } from "react-router-dom";
+import "./Cart.css";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
 export default function Cart() {
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const [stripeToken, setStripeToken] = useState(null);
-
-  const onToken = (token) => {
-    setStripeToken(token);
-  };
-
-  console.log(stripeToken);
 
   const product = cart.products;
   const quantity = cart.quantity;
-  const total = cart.total
+  const total = cart.total;
 
   const handleRemove = () => {
-    dispatch(removeProduct({product, price: product.price, quantity, total }))
-  }
+    dispatch(removeProduct({ product, price: product.price, quantity, total }));
+  };
 
+  async function handleToken(token, addresses) {
+    const response = await axios.post(
+      `${ProductAPI}/checkout/payment`,
+      { token, product }
+    );
+    await axios.post(`${ProductAPI}/orders`, {token, product, total});
+
+    navigate("/success");
+    if (response === 200) {
+      navigate("/success");
+      console.log("200");
+    } else {
+      console.log("error");
+    }
+  }
 
   return (
     <div className="container">
@@ -36,12 +48,26 @@ export default function Cart() {
         <div className="col-lg-8">
           <div className="row">
             {product.map((product, index) => (
-              <CartTemplate {...product} key={index} delbtn={<button onClick={handleRemove}>del</button>}/>
+              <CartTemplate
+                {...product}
+                key={index}
+                delbtn={
+                  <button
+                    onClick={handleRemove}
+                    className="btn btn-outline-white border-0 text-danger"
+                  >
+                    <span
+                      class="iconify"
+                      data-icon="ant-design:delete-filled"
+                    ></span>
+                  </button>
+                }
+              />
             ))}
           </div>
         </div>
         {/* cart total */}
-        <div className="col h-100 shadow-lg mt-4 rounded-3 text-center MainContent_Text">
+        <div className="col h-100 shadow-lg mt-2 rounded-3 text-center MainContent_Text m-2">
           <div className="p-3">
             <h4 className="fw-bold">Order summary</h4>
             <h6>
@@ -52,10 +78,10 @@ export default function Cart() {
               name="NoodleCountry"
               billingAddress
               shippingAddress
-              description={`Your amount is ₹ ${ total}`}
+              description={`Your amount is ₹ ${total}`}
               amount={total * 100}
-              token={onToken}
-              currency = "usd"
+              token={handleToken}
+              currency="usd"
               stripeKey={KEY}
             >
               <button className="btn btn-outline-danger text-warning fw-bold">
@@ -83,7 +109,7 @@ function CartTemplate({ img, _id, name, quantity, price, delbtn }) {
           <h6 className="fw-bold">
             Price: <span className="text-success">₹ {price * quantity}</span>
           </h6>
-          {delbtn}
+          <span className="delbtn">{delbtn}</span>
         </div>
       </div>
     </div>

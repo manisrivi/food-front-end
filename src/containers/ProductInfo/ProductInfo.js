@@ -18,7 +18,6 @@ export default function ProductInfo() {
   const getProductById = async () => {
     try {
       const { data } = await axios.get(`${ProductAPI}/products/${id}`);
-      console.log("product:", data);
       setProduct(data);
     } catch (error) {
       console.log(error.message);

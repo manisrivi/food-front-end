@@ -30,6 +30,7 @@ export default function Admin() {
                   className="form-control"
                   type="email"
                   name="email"
+                  value="admin@noodlecountry.com"
                   id="email"
                   placeholder="Email"
                 />
@@ -40,6 +41,7 @@ export default function Admin() {
                   className="form-control"
                   type="password"
                   name="password"
+                  value="admin@12"
                   id="password"
                   placeholder="Password"
                 />
@@ -49,7 +51,7 @@ export default function Admin() {
                 <button
                   type="submit"
                   className="w-100 btn btn-outline-danger text-warning fw-bold"
-                  onClick={() => navigate("/products")}
+                  onClick={() => navigate("/adminHome")}
                 >
                   Login
                 </button>
