@@ -5,6 +5,7 @@ import axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+
 // Login Component
 export default function LoginPage() {
   // navigate function
@@ -44,13 +45,12 @@ export default function LoginPage() {
             validationSchema={loginSchema}
             onSubmit={async (values) => {
               try {
-                const {
-                  data: { authToken },
-                } = await axios.post(`${ProductAPI}/auth/login`, values);
+                const {data: { authToken },} = await axios.post(`${ProductAPI}/auth/login`, values);
                 window.localStorage.setItem("authToken", authToken);
+                window.localStorage.setItem("email", values.email);
                 navigate("/products");
               } catch ({ response: { data } }) {
-                console.log(data.error);
+               alert(data.error);
               }
             }}
           >

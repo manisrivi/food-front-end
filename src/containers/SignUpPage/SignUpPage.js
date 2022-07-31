@@ -49,7 +49,9 @@ export default function SignUpPage() {
                 await axios.post(`${ProductAPI}/auth/register`, values);
                 console.log(values);
                 navigate("/login");
-              } catch (error) {}
+              } catch ({ response: { data } }) {
+                alert(data.error);
+              }
             }}
           >
             {({ errors, touched }) => (
