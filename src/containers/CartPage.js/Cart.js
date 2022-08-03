@@ -72,7 +72,7 @@ export default function Cart() {
             <h4 className="fw-bold">Order summary</h4>
             <h6>
               Total Price:{" "}
-              <span className="fw-bold text-success">₹ {total}</span>
+              <span className="fw-bold text-success">₹ {Math.round(total)}</span>
             </h6>
             <StripeCheckout
               name="NoodleCountry"

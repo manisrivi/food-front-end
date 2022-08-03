@@ -19,6 +19,8 @@ import FoodList, { AddFoodList, EditFoodList } from "./containers/Admin/FoodList
 import OrderList, { OrdersInfo } from "./containers/Admin/OrderList";
 import AdminNavbar from "./containers/Admin/AdminNavbar";
 import Sample from "./containers/sample";
+import ForgetPassword from "./containers/ForgetPassword/ForgetPassword";
+import ResetPassword from "./containers/ForgetPassword/ResetPassword";
 
 function App() {
   return (
@@ -45,6 +47,8 @@ function App() {
         <Route path="/addFoodList" element={<AddFoodList/>}/>
         <Route path="/editFoodList/edit/:id" element={<EditFoodList/>}/>
         <Route path="sample" element={<Sample/>}/>
+        <Route path="/forgetpassword" element={<ForgetPassword/>}/>
+        <Route path="/resetpassword" element={<ResetPassword />}/>
         {/* <Route path="/myorders" element={<MyOrders />} /> */}
       </Routes>
     </div>

@@ -93,12 +93,13 @@ export default function LoginPage() {
                     >
                       Login
                     </button>
+                   {/* <p className="text-start mt-2"><Link to="/forgetpassword" className="text-decoration-none">ForgetPassword?</Link></p> */}
                   </div>
                 </div>
               </Form>
             )}
           </Formik>
-          <p className="mt-4 text-center">
+          <p className="text-end">
             Don't have an account?{" "}
             <Link to="/signup" className="text-decoration-none">
               Sign Up
