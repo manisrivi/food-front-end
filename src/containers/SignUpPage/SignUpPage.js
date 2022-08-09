@@ -1,10 +1,12 @@
+// import files
 import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ProductAPI } from "../../Global files/ProductsAPI";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 // SignUp Component
 export default function SignUpPage() {
@@ -35,6 +37,7 @@ export default function SignUpPage() {
       </nav>
       <div className="row justify-content-center m-2">
         <div className="col-sm-4 col-md-6 col-lg-4 p-3 rounded-5 shadow-lg p-4">
+          {/* Formik validation */}
           <Formik
             initialValues={{
               fullname: "",
@@ -45,12 +48,13 @@ export default function SignUpPage() {
             }}
             validationSchema={SignupSchema}
             onSubmit={async (values) => {
+              // api call
               try {
                 await axios.post(`${ProductAPI}/auth/register`, values);
-                console.log(values);
                 navigate("/login");
+                toast.success("Registration Successfull");
               } catch ({ response: { data } }) {
-                alert(data.error);
+                toast.error(data.error);
               }
             }}
           >
@@ -75,7 +79,9 @@ export default function SignUpPage() {
                   />
                 </div>
                 {errors.fullname && touched.fullname ? (
-                  <span className="text-danger text-start">*{errors.fullname}*</span>
+                  <span className="text-danger text-start">
+                    *{errors.fullname}*
+                  </span>
                 ) : null}
 
                 {/* Contact number */}
@@ -88,7 +94,9 @@ export default function SignUpPage() {
                   />
                 </div>
                 {errors.contactnumber && touched.contactnumber ? (
-                  <span className="text-danger text-start">*{errors.contactnumber}*</span>
+                  <span className="text-danger text-start">
+                    *{errors.contactnumber}*
+                  </span>
                 ) : null}
 
                 {/* Email */}
@@ -101,7 +109,9 @@ export default function SignUpPage() {
                   />
                 </div>
                 {errors.email && touched.email ? (
-                  <span className="text-danger text-start">*{errors.email}*</span>
+                  <span className="text-danger text-start">
+                    *{errors.email}*
+                  </span>
                 ) : null}
 
                 {/* Password */}
@@ -114,7 +124,9 @@ export default function SignUpPage() {
                   />
                 </div>
                 {errors.password && touched.password ? (
-                  <span className="text-danger text-start">*{errors.password}*</span>
+                  <span className="text-danger text-start">
+                    *{errors.password}*
+                  </span>
                 ) : null}
 
                 {/* Confirm Password */}
@@ -127,7 +139,9 @@ export default function SignUpPage() {
                   />
                 </div>
                 {errors.cPassword && touched.cPassword ? (
-                  <span className="text-danger text-start">*{errors.cPassword}*</span>
+                  <span className="text-danger text-start">
+                    *{errors.cPassword}*
+                  </span>
                 ) : null}
 
                 {/* submit Button */}

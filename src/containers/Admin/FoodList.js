@@ -1,3 +1,4 @@
+// import files
 import React from "react";
 import AdminNavbar from "./AdminNavbar";
 import { useNavigate } from "react-router-dom";
@@ -7,9 +8,9 @@ import { ProductAPI } from "../../Global files/ProductsAPI";
 import { useEffect } from "react";
 import { useReducer } from "react";
 import { formReducer } from "../../Global files/formReducer";
-import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
+// Food List
 export default function FoodList() {
   const [query, setQuery] = useState("");
   // navigate to page
@@ -18,9 +19,10 @@ export default function FoodList() {
   const [foodList, setFoodList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // get users details
+  // get food details
   const getFoodList = async () => {
     try {
+      // api call & state management
       const { data } = await axios.get(`${ProductAPI}/products`);
       setFoodList(data);
       setIsLoading(false);
@@ -29,8 +31,9 @@ export default function FoodList() {
     }
   };
 
-  // delete user
+  // delete food
   const deleteFood = async ({ name, _id }) => {
+    // api call & state management
     if (window.confirm(`Are You Sure Delete This User ${name}`)) {
       try {
         await axios.delete(`${ProductAPI}/products/${_id}`, { _id });
@@ -42,6 +45,7 @@ export default function FoodList() {
     }
   };
 
+  // useEffect use refresh data
   useEffect(() => {
     getFoodList();
   }, []);
@@ -67,6 +71,7 @@ export default function FoodList() {
         </button>
       </div>
       <div className="row table-responsive">
+        {/* food list Table */}
         <table className="text-center table">
           <thead className="bg-success bg-opacity-75 text-warning">
             <tr>
@@ -133,22 +138,51 @@ export default function FoodList() {
   );
 }
 
-// Add Food
+// Add Food function
 export function AddFoodList() {
+  // navigate to page
   const navigate = useNavigate();
+  // state management
+  const [base64code, setbase64code] = useState("");
+  const [image, setImage] = useState("");
 
+  // image handle function
+  const imghandleSubmit = (e) => {
+    const files = e.target.files;
+    const file = files[0];
+    getBase64(file);
+  };
+
+  // image to string converted function
+  const onLoad = (fileString) => {
+    setImage(fileString);
+    setbase64code = fileString;
+  };
+
+  // Image file reader function
+  const getBase64 = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      onLoad(reader.result);
+    };
+  };
+
+  // form initialValues
   const [food, setFood] = useReducer(formReducer, {
     name: "",
     desc: "",
-    img: "",
+    img: image,
     price: "",
     rating: "",
     offer: "",
   });
 
+  // form submit
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
+      // api call
       await axios.post(`${ProductAPI}/products`, food);
       navigate("/foodList");
     } catch (error) {
@@ -190,16 +224,26 @@ export function AddFoodList() {
                 onChange={setFood}
               />
             </div>
+            {/* Base64 */}
+            <div>
+              <input
+                type="file"
+                className="form-control"
+                required
+                onChange={imghandleSubmit}
+              />
+            </div>
             {/* Image */}
             <div>
               <input
                 type="text"
                 name="img"
-                placeholder="Image Url"
+                placeholder=""
                 className="form-control"
                 id="img"
-                required
+                value={image}
                 onChange={setFood}
+                required
               />
             </div>
             {/* Price */}
@@ -259,11 +303,13 @@ export function AddFoodList() {
   );
 }
 
-// Edit FoodList
+// Edit FoodList function
 export function EditFoodList() {
+  // state management
   const { id } = useParams();
   const [food, setFood] = useState(null);
 
+  // edit food api call
   const editFood = async () => {
     try {
       const { data } = await axios.get(`${ProductAPI}/products/${id}`);
@@ -273,6 +319,7 @@ export function EditFoodList() {
     }
   };
 
+  // useEffect use refresh data
   useEffect(() => {
     editFood();
   });
@@ -297,9 +344,37 @@ export function EditFoodList() {
   );
 }
 
+// Edit Food list form function
 export function EditFoodForm({ food }) {
+  // navigate to page
   const navigate = useNavigate();
+  // state management
+  const [base64code, setbase64code] = useState("");
+  const [image, setImage] = useState("");
 
+  // image handle function
+  const imghandleSubmit = (e) => {
+    const files = e.target.files;
+    const file = files[0];
+    getBase64(file);
+  };
+
+  // image file converted to string
+  const onLoad = (fileString) => {
+    setImage(fileString);
+    setbase64code = fileString;
+  };
+
+  // image file reader
+  const getBase64 = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      onLoad(reader.result);
+    };
+  };
+
+  // state management
   const [name, setName] = useState(food.name);
   const [img, setImg] = useState(food.img);
   const [desc, setDesc] = useState(food.desc);
@@ -307,6 +382,7 @@ export function EditFoodForm({ food }) {
   const [rating, setRating] = useState(food.rating);
   const [offer, setOffer] = useState(food.offer);
 
+  // edit food update form and api call
   const editfood = () => {
     const updateFood = {
       name: name,
@@ -331,6 +407,7 @@ export function EditFoodForm({ food }) {
       <div className="row justify-content-center m-2 mt-5 mx-auto gap-3">
         <div className="col-sm-4 col-md-6 col-lg-4 p-3 rounded-5 shadow-lg p-4 mx-auto">
           <h5 className="text-center MainContent_Text">Edit Food List</h5>
+          {/* name */}
           <input
             className="mt-2 form-control"
             value={name}
@@ -338,13 +415,21 @@ export function EditFoodForm({ food }) {
             placeholder="name"
             onChange={(event) => setName(event.target.value)}
           />
+          {/* image file */}
           <input
             className="mt-2 form-control"
-            value={img}
+            type="file"
+            onChange={imghandleSubmit}
+          />
+          {/* iamge link */}
+          <input
+            className="mt-2 form-control"
+            value={image}
             type="text"
             placeholder="Image"
             onChange={(event) => setImg(event.target.value)}
           />
+          {/* description */}
           <input
             className="mt-2 form-control"
             value={desc}
@@ -352,6 +437,7 @@ export function EditFoodForm({ food }) {
             placeholder="Description"
             onChange={(event) => setDesc(event.target.value)}
           />
+          {/* price */}
           <input
             className="mt-2 form-control"
             value={price}
@@ -359,6 +445,7 @@ export function EditFoodForm({ food }) {
             placeholder="Price"
             onChange={(event) => setPrice(event.target.value)}
           />
+          {/* rating */}
           <input
             className="mt-2 form-control"
             value={rating}
@@ -366,6 +453,7 @@ export function EditFoodForm({ food }) {
             placeholder="Rating"
             onChange={(event) => setRating(event.target.value)}
           />
+          {/* offer */}
           <input
             className="mt-2 form-control"
             value={offer}
@@ -373,6 +461,7 @@ export function EditFoodForm({ food }) {
             placeholder="offer"
             onChange={(event) => setOffer(event.target.value)}
           />
+          {/* submit button */}
           <button
             className="btn btn-outline-success fw-bold mt-2 form-control"
             onClick={editfood}

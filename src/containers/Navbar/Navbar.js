@@ -1,9 +1,10 @@
+// import files
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-
-
+// navbar page
 export default function Navbar() {
+  // navigate to page
   const navigate = useNavigate();
   return (
     <div>
@@ -25,23 +26,47 @@ export default function Navbar() {
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-5">
+              <li class="nav-item d-flex gap-1">
+                <span
+                  class="iconify text-success"
+                  data-icon="ant-design:phone-filled"
+                  data-width="30"
+                ></span>
+                <h5 className="text-success fw-bold">01-2345-625</h5>
+              </li>
+            </ul>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-5">
               <li class="nav-item">
-                <Link className="fw-bold text-decoration-none text-dark MainContent_Text" to="/About">
+                <Link
+                  className="fw-bold text-decoration-none text-dark MainContent_Text"
+                  to="/About"
+                >
                   About Us
                 </Link>
               </li>
               <li class="nav-item">
-                <Link className="fw-bold text-decoration-none text-dark MainContent_Text" to="/contact">
+                <Link
+                  className="fw-bold text-decoration-none text-dark MainContent_Text"
+                  to="/contact"
+                >
                   Contact
                 </Link>
               </li>
               <li class="nav-item">
-                <Link className="fw-bold text-decoration-none text-dark MainContent_Text" to="/login">
+                <Link
+                  className="fw-bold text-decoration-none text-dark MainContent_Text"
+                  to="/login"
+                >
                   Login
                 </Link>
               </li>
               <li class="nav-item">
-                <Link className="fw-bold text-decoration-none text-dark MainContent_Text" to="/admin">
+                <Link
+                  className="fw-bold text-decoration-none text-dark MainContent_Text"
+                  to="/admin"
+                >
                   Admin
                 </Link>
               </li>

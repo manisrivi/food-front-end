@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+// import files
+import React from "react";
 import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import UserNavbar from "../userNavbar/userNavbar";
@@ -9,28 +10,76 @@ import { ProductAPI } from "../../Global files/ProductsAPI";
 import { useNavigate } from "react-router-dom";
 import "./Cart.css";
 
+// stripe key
 const KEY = process.env.REACT_APP_STRIPE;
 
+// cart function
 export default function Cart() {
+  // authtoken localStorage
+  const authToken = window.localStorage.getItem("authToken");
+
+  // get Id from authToken
+  function parseJwt(token) {
+    var base64Url = token.split(".")[1];
+    var base64 = decodeURIComponent(
+      atob(base64Url)
+        .split("")
+        .map((c) => {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    return JSON.parse(base64);
+  }
+
+  let a = parseJwt(authToken);
+  let userId = a._id;
+
+  // navigate to page
   const navigate = useNavigate();
+
+  // state management
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
+  // declere the variables
   const product = cart.products;
   const quantity = cart.quantity;
   const total = cart.total;
 
+  // initial order status
+  const status = "order placed";
+
+  // remove from cart
   const handleRemove = () => {
     dispatch(removeProduct({ product, price: product.price, quantity, total }));
   };
 
+  // payment function & api call
   async function handleToken(token, addresses) {
+    // send to payment
     const response = await axios.post(
       `${ProductAPI}/checkout/payment`,
-      { token, product }
+      { token, product },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
     );
-    await axios.post(`${ProductAPI}/orders`, {token, product, total});
 
+    // send to orders from db
+    await axios.post(
+      `${ProductAPI}/orders`,
+      { userId, token, product, total, status },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      }
+    );
+
+    // navigate to success page
     navigate("/success");
     if (response === 200) {
       navigate("/success");
@@ -72,16 +121,18 @@ export default function Cart() {
             <h4 className="fw-bold">Order summary</h4>
             <h6>
               Total Price:{" "}
-              <span className="fw-bold text-success">₹ {Math.round(total)}</span>
+              <span className="fw-bold text-success">
+                ₹ {Math.round(total)}
+              </span>
             </h6>
             <StripeCheckout
               name="NoodleCountry"
               billingAddress
               shippingAddress
-              description={`Your amount is ₹ ${total}`}
-              amount={total * 100}
+              description={`Your amount is ₹ ${Math.round(total)}`}
+              amount={Math.round(total) * 100}
               token={handleToken}
-              currency="usd"
+              currency="INR"
               stripeKey={KEY}
             >
               <button className="btn btn-outline-danger text-warning fw-bold">
@@ -95,6 +146,7 @@ export default function Cart() {
   );
 }
 
+// cart template
 function CartTemplate({ img, _id, name, quantity, price, delbtn }) {
   return (
     <div className="col-sm-5 col-md-6 MainContent_Text">

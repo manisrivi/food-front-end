@@ -1,6 +1,8 @@
+// import files
 import React from "react";
 import { Link } from "react-router-dom";
 
+// contact page
 export default function ContactPage() {
   return (
     <div className="container">

@@ -1,14 +1,22 @@
+// import files
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
+// user Navbar page
 export default function UserNavbar() {
+  // authToken get form localStorage
   const email = window.localStorage.getItem("email");
+  // navigate to page
   const navigate = useNavigate();
+  // logout function
   const Logout = () => {
     window.localStorage.clear();
     navigate("/login");
+    toast.success("Logout Successfully");
   };
+  // quantity get from redux
   const quantity = useSelector((state) => state.cart.quantity);
 
   return (
@@ -48,15 +56,23 @@ export default function UserNavbar() {
                 >
                   {email}
                 </span>
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu text-center">
                   <li>
-                  <Link
-                  className="btn btn-outline-light bg-white border-0 fw-bold text-decoration-none text-dark MainContent_Text"
-                  to="/"
-                  onClick={Logout}
-                >
-                  Logout
-                </Link>
+                    <Link
+                      className="text-decoration-none text-dark MainContent_Text"
+                      to="/myorders"
+                    >
+                      MyOrders
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="text-decoration-none text-dark MainContent_Text"
+                      to="/"
+                      onClick={Logout}
+                    >
+                      Logout
+                    </Link>
                   </li>
                 </ul>
               </li>

@@ -1,16 +1,15 @@
+// import files
 import React from "react";
 import "./ContentPage.css";
 import image1 from "./Image/image1.png";
 import { Link } from "react-router-dom";
-import LoginPage from "../LoginPage/LoginPage";
 import Navbar from "../Navbar/Navbar";
 
-
+// content page
 export default function ContentPage() {
-
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className="container mt-5">
         <div className="row justify-content-center">
           {/*Main Contant */}
@@ -26,7 +25,10 @@ export default function ContentPage() {
               get a variety of Noodles full of tempting flavors and <br /> cheap
               prices for various groups
             </p>
-            <Link to="/products" className="btn btn-outline-danger fw-bold text-warning">
+            <Link
+              to="/products"
+              className="btn btn-outline-danger fw-bold text-warning"
+            >
               Order Now
             </Link>
           </div>
@@ -42,15 +44,27 @@ export default function ContentPage() {
             </div>
             <div className="d-flex justify-content-between gap-2">
               <div className="shadow-lg rounded-3 p-3 ">
-              <span class="iconify text-danger" data-icon="dashicons:food" data-width="40"></span>
+                <span
+                  class="iconify text-danger"
+                  data-icon="dashicons:food"
+                  data-width="40"
+                ></span>
                 <h6 className="fw-bold text-warning">Quality Food</h6>
               </div>
               <div className="shadow-lg rounded-3 p-3">
-              <span class="iconify text-danger" data-icon="mdi:truck-delivery-outline" data-width="40"></span>
+                <span
+                  class="iconify text-danger"
+                  data-icon="mdi:truck-delivery-outline"
+                  data-width="40"
+                ></span>
                 <h6 className="fw-bold text-warning">Fast Delivery</h6>
               </div>
               <div className="shadow-lg rounded-3 p-3">
-              <span class="iconify text-danger" data-icon="bxs:offer" data-width="40"></span>
+                <span
+                  class="iconify text-danger"
+                  data-icon="bxs:offer"
+                  data-width="40"
+                ></span>
                 <h6 className="fw-bold text-warning">More Offers</h6>
               </div>
             </div>
@@ -60,4 +74,3 @@ export default function ContentPage() {
     </div>
   );
 }
-

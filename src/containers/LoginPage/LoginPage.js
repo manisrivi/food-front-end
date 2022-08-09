@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+// import files
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ProductAPI } from "../../Global files/ProductsAPI";
 import axios from "axios";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-
+import { toast } from "react-toastify";
 
 // Login Component
 export default function LoginPage() {
@@ -37,6 +38,7 @@ export default function LoginPage() {
             className="w-50 mb-2"
             alt=""
           />
+          {/* Formik validation */}
           <Formik
             initialValues={{
               email: "",
@@ -44,13 +46,17 @@ export default function LoginPage() {
             }}
             validationSchema={loginSchema}
             onSubmit={async (values) => {
+              // api call
               try {
-                const {data: { authToken },} = await axios.post(`${ProductAPI}/auth/login`, values);
+                const {
+                  data: { authToken },
+                } = await axios.post(`${ProductAPI}/auth/login`, values);
                 window.localStorage.setItem("authToken", authToken);
                 window.localStorage.setItem("email", values.email);
                 navigate("/products");
+                toast.success("Login Successfully");
               } catch ({ response: { data } }) {
-               alert(data.error);
+                toast.error(data.error);
               }
             }}
           >
@@ -93,7 +99,14 @@ export default function LoginPage() {
                     >
                       Login
                     </button>
-                   {/* <p className="text-start mt-2"><Link to="/forgetpassword" className="text-decoration-none">ForgetPassword?</Link></p> */}
+                    <p className="text-start mt-2">
+                      <Link
+                        to="/forget-password"
+                        className="text-decoration-none"
+                      >
+                        ForgetPassword?
+                      </Link>
+                    </p>
                   </div>
                 </div>
               </Form>

@@ -1,7 +1,10 @@
+// import files
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+// payment success page
 export default function Success() {
+  // navigate to page
   const navigate = useNavigate();
   return (
     <div className="container mt-5">
