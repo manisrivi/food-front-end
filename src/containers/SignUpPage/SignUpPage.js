@@ -48,9 +48,21 @@ export default function SignUpPage() {
             }}
             validationSchema={SignupSchema}
             onSubmit={async (values) => {
-              // api call
+              const form = {
+                email: values.email,
+                message: `Registration Successfully <br/>
+                <br/>
+                Best Wishes!!! <br/>
+                NoodleCountry Restaurant
+                `,
+                subject: "Registration",
+                name: `"Hi", ${values.fullname}`,
+              };
               try {
+                // Register api call
                 await axios.post(`${ProductAPI}/auth/register`, values);
+                // send mail to user api call
+                await axios.post("http://localhost:9092/auth/sendmail", form);
                 navigate("/login");
                 toast.success("Registration Successfull");
               } catch ({ response: { data } }) {

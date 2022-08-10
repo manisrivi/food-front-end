@@ -27,6 +27,7 @@ import ForgetPassword from "./containers/ForgetPassword/ForgetPassword";
 import ResetPassword from "./containers/ForgetPassword/ResetPassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Email from "./containers/Email/Email";
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
         <Route path="/editFoodList/edit/:id" element={<EditFoodList />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
+        <Route path="/email" element={<Email/>}/>
       </Routes>
       <ToastContainer />
     </div>

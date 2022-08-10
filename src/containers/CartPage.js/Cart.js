@@ -1,5 +1,5 @@
 // import files
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import UserNavbar from "../userNavbar/userNavbar";
@@ -34,6 +34,7 @@ export default function Cart() {
 
   let a = parseJwt(authToken);
   let userId = a._id;
+  let email = a.email;
 
   // navigate to page
   const navigate = useNavigate();
@@ -58,15 +59,10 @@ export default function Cart() {
   // payment function & api call
   async function handleToken(token, addresses) {
     // send to payment
-    const response = await axios.post(
-      `${ProductAPI}/checkout/payment`,
-      { token, product },
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      }
-    );
+    const response = await axios.post(`${ProductAPI}/checkout`, {
+      token,
+      product,
+    });
 
     // send to orders from db
     await axios.post(
@@ -78,6 +74,32 @@ export default function Cart() {
         },
       }
     );
+
+    // send mail to user template
+    const form = {
+      email: email,
+      message: ` <table role="presentation" border="1" cellspacing="1" width="50%">
+      <thead>
+        <tr>
+          <th>Food name</th>
+          <th>Total amount</th>
+        </tr>
+      </thead>
+      <tbody role="presentation" border="1" cellspacing="1" width="50%" align="center">
+          <td>${product.map((x) => x.name)}</td>
+          <td>${total}</td>
+      </tbody>
+    </table>
+    <br/>
+    Best Wishes!!! <br/>
+    NoodleCountry Restaurant
+    `,
+      subject: "Orders",
+      name: `"Hi", ${email}`,
+    };
+
+    // send Mail api call
+    await axios.post("http://localhost:9092/auth/sendmail", form);
 
     // navigate to success page
     navigate("/success");
@@ -92,6 +114,7 @@ export default function Cart() {
   return (
     <div className="container">
       <UserNavbar />
+
       <div className="row">
         {/* cart list */}
         <div className="col-lg-8">
