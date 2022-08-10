@@ -99,7 +99,7 @@ export default function Cart() {
     };
 
     // send Mail api call
-    await axios.post("http://localhost:9092/auth/sendmail", form);
+    await axios.post(`${ProductAPI}/auth/sendmail`, form);
 
     // navigate to success page
     navigate("/success");

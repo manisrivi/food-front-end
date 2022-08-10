@@ -62,7 +62,7 @@ export default function SignUpPage() {
                 // Register api call
                 await axios.post(`${ProductAPI}/auth/register`, values);
                 // send mail to user api call
-                await axios.post("http://localhost:9092/auth/sendmail", form);
+                await axios.post(`${ProductAPI}/auth/sendmail`, form);
                 navigate("/login");
                 toast.success("Registration Successfull");
               } catch ({ response: { data } }) {
