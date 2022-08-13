@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 
 // content page
-export default function ContentPage() {
+export default function ContentPage({themeToggler}) {
   return (
     <div>
-      <Navbar />
+      <Navbar themeToggler={themeToggler}/>
       <div className="container mt-5">
         <div className="row justify-content-center">
           {/*Main Contant */}
@@ -25,12 +25,20 @@ export default function ContentPage() {
               get a variety of Noodles full of tempting flavors and <br /> cheap
               prices for various groups
             </p>
+            <div className="d-flex gap-2">
             <Link
               to="/products"
               className="btn btn-outline-danger fw-bold text-warning"
             >
               Order Now
             </Link>
+            <Link
+              to="/booktable"
+              className="btn btn-outline-danger fw-bold text-warning"
+            >
+              Book Table
+            </Link>
+            </div>
           </div>
           {/* MainPage Image */}
           <div className="col-sm-6 col-lg-5">

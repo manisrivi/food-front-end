@@ -22,7 +22,7 @@ export default function ResetPassword() {
 
   return (
     <div className="container">
-      <nav class="navbar bg-white">
+      <nav class="navbar navbar-expand-lg">
         <div class="container">
           <span class="navbar-brand mb-0 h1">
             <Link class="text-decoration-none fw-bold text-danger" to="/">
@@ -32,7 +32,7 @@ export default function ResetPassword() {
         </div>
       </nav>
       <div className="row justify-content-center mt-5 m-2">
-        <div className="col-sm-4 col-md-6 col-lg-4 rounded-5 shadow-lg p-4 text-center">
+        <div className="col-sm-4 col-md-6 col-lg-4 rounded-5 shadow-lg p-4 text-center border">
           <h5 className="text-center">Reset your password?</h5>
           <img
             src="https://i.gifer.com/IPNp.gif"

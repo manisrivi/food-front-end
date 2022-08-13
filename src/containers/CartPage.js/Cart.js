@@ -98,11 +98,10 @@ export default function Cart() {
       name: `"Hi", ${email}`,
     };
 
-    // send Mail api call
-    await axios.post(`${ProductAPI}/auth/sendmail`, form);
-
     // navigate to success page
     navigate("/success");
+    // send Mail api call
+    await axios.post(`${ProductAPI}/auth/sendmail`, form);
     if (response === 200) {
       navigate("/success");
       console.log("200");
@@ -181,7 +180,7 @@ function CartTemplate({ img, _id, name, quantity, price, delbtn }) {
           <h6 className="fw-bold text-secondary"> Name: {name}</h6>
           <h6 className="fw-bold text-secondary">Id: {_id}</h6>
           <h6 className="fw-bold text-secondary">Qty: {quantity}Nos</h6>
-          <h6 className="fw-bold">
+          <h6 className="fw-bold text-secondary">
             Price: <span className="text-success">₹ {price * quantity}</span>
           </h6>
           <span className="delbtn">{delbtn}</span>

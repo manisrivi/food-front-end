@@ -7,7 +7,7 @@ export default function About() {
   return (
     <div>
       {/* Navbar */}
-      <nav class="navbar bg-white">
+      <nav class="navbar navbar-expand-lg">
         <div class="container">
           <span class="navbar-brand mb-0 h1">
             <Link class="text-decoration-none fw-bold text-danger" to="/">

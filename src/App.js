@@ -27,39 +27,64 @@ import ForgetPassword from "./containers/ForgetPassword/ForgetPassword";
 import ResetPassword from "./containers/ForgetPassword/ResetPassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Email from "./containers/Email/Email";
+import BookTable from "./containers/BookTable/BookTable";
+import TableBook, { EditTableList } from "./containers/Admin/TableBook";
+import styled, { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme, GlobalStyles } from "./Global files/themes";
+import { useState } from "react";
+
+const StyledApp = styled.div`
+  color: ${(props) => props.theme.fontColor};
+`;
 
 function App() {
+  const [theme, setTheme] = useState("light");
+  const themeToggler = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
   return (
     <div>
-      <Routes>
-        <Route path="/" element={<ContentPage />} />
-        <Route path="/About" element={<About />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/userNavbar" element={<UserNavbar />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/product/:id" element={<ProductInfo />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/myorders" element={<MyOrders />} />
-        <Route path="/userOrdersInfo/:id" element={<UserOrdersInfo />} />
-        <Route path="/success" element={<Success />} />
-        <Route path="/adminHome" element={<AdminHome />} />
-        <Route path="/adminNavbar" element={<AdminNavbar />} />
-        <Route path="/userList" element={<UserList />} />
-        <Route path="/users/:id" element={<UserInfo />} />
-        <Route path="/orderList" element={<OrderList />} />
-        <Route path="/orders/:id" element={<OrdersInfo />} />
-        <Route path="/editOrderList/edit/:id" element={<EditOrderList />} />
-        <Route path="/foodList" element={<FoodList />} />
-        <Route path="/addFoodList" element={<AddFoodList />} />
-        <Route path="/editFoodList/edit/:id" element={<EditFoodList />} />
-        <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
-        <Route path="/email" element={<Email/>}/>
-      </Routes>
+      <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <GlobalStyles />
+        <StyledApp>
+          <Routes>
+            <Route
+              path="/"
+              element={<ContentPage themeToggler={themeToggler} />}
+            />
+            <Route path="/About" element={<About />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="/userNavbar" element={<UserNavbar />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/product/:id" element={<ProductInfo />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/myorders" element={<MyOrders />} />
+            <Route path="/userOrdersInfo/:id" element={<UserOrdersInfo />} />
+            <Route path="/success" element={<Success />} />
+            <Route path="/adminHome" element={<AdminHome />} />
+            <Route path="/adminNavbar" element={<AdminNavbar />} />
+            <Route path="/userList" element={<UserList />} />
+            <Route path="/users/:id" element={<UserInfo />} />
+            <Route path="/orderList" element={<OrderList />} />
+            <Route path="/orders/:id" element={<OrdersInfo />} />
+            <Route path="/editOrderList/edit/:id" element={<EditOrderList />} />
+            <Route path="/foodList" element={<FoodList />} />
+            <Route path="/addFoodList" element={<AddFoodList />} />
+            <Route path="/editFoodList/edit/:id" element={<EditFoodList />} />
+            <Route path="/forget-password" element={<ForgetPassword />} />
+            <Route
+              path="/reset-password/:id/:token"
+              element={<ResetPassword />}
+            />
+            <Route path="/booktable" element={<BookTable />} />
+            <Route path="tablebook" element={<TableBook />} />
+            <Route path="/editTableList/edit/:id" element={<EditTableList />} />
+          </Routes>
+        </StyledApp>
+      </ThemeProvider>
       <ToastContainer />
     </div>
   );

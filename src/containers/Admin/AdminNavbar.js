@@ -20,7 +20,7 @@ export default function AdminNavbar() {
   return (
     <div>
       {/* Navbar */}
-      <nav class="navbar navbar-expand-lg bg-white text-center mt-1">
+      <nav class="navbar navbar-expand-lg text-center mt-1">
         <div class="container">
           <Link class="navbar-brand fw-bold text-danger" to="/adminHome">
             Noodle<span className="text-warning">Country</span>
@@ -40,7 +40,7 @@ export default function AdminNavbar() {
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3">
               <li class="nav-item">
                 <button
-                  className="btn btn-outline-light bg-white border-0 fw-bold text-decoration-none text-dark MainContent_Text"
+                  className="btn  border-0 fw-bold text-decoration-none text-danger MainContent_Text"
                   onClick={Logout}
                 >
                   Logout

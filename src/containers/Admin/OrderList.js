@@ -86,7 +86,7 @@ export default function OrderList() {
             {isLoading && (
               <div className="">
                 <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921"
+                  src="https://i.stack.imgur.com/hzk6C.gif"
                   alt=""
                 />
               </div>

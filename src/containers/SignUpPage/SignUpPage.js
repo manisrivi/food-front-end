@@ -26,7 +26,7 @@ export default function SignUpPage() {
 
   return (
     <div className="container">
-      <nav class="navbar bg-white">
+      <nav class="navbar navbar-expand-lg">
         <div class="container">
           <span class="navbar-brand mb-0 h1">
             <Link class="text-decoration-none fw-bold text-danger" to="/">
@@ -36,7 +36,7 @@ export default function SignUpPage() {
         </div>
       </nav>
       <div className="row justify-content-center m-2">
-        <div className="col-sm-4 col-md-6 col-lg-4 p-3 rounded-5 shadow-lg p-4">
+        <div className="col-sm-4 col-md-6 col-lg-4 p-3 rounded-5 shadow-lg p-4 border">
           {/* Formik validation */}
           <Formik
             initialValues={{

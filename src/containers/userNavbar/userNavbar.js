@@ -21,7 +21,7 @@ export default function UserNavbar() {
 
   return (
     <div>
-      <nav class="navbar navbar-expand-lg bg-white text-center mt-1">
+      <nav class="navbar navbar-expand-lg  text-center mt-1">
         <div class="container">
           <Link class="navbar-brand fw-bold text-danger" to="/">
             Noodle<span className="text-warning">Country</span>
@@ -41,15 +41,15 @@ export default function UserNavbar() {
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3">
               <li class="nav-item">
                 <Link
-                  className="btn btn-outline-light bg-white border-0 fw-bold text-decoration-none text-dark MainContent_Text"
+                  className="btn btn-outline-light border-0 fw-bold text-decoration-none text-info MainContent_Text"
                   to="/products"
                 >
                   Noodles
                 </Link>
               </li>
-              <li class="nav-item dropdown fw-bold text-dark MainContent_Text">
+              <li class="nav-item dropdown fw-bold text-info MainContent_Text">
                 <span
-                  class="nav-link dropdown-toggle"
+                  class="nav-link dropdown-toggle text-info"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
