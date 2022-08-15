@@ -77,16 +77,18 @@ export default function BookTable() {
                 onSubmit={async (values) => {
                   const form = {
                     email: values.email,
-                    message: `<h1>Booking Confirm</h1><br/>
-                   <p>fullname: ${values.fullname}</p>
-                   <p>contactnumber: ${values.contactnumber}</p>
-                   <p> location: ${values.location}</p>
-                   <p>date: ${values.date}</p>
-                   <p>time: ${values.time}</p>
-                   <p>foodtype: ${values.foodtype}</p>
-                   <p>count: ${values.count}</p>
+                    message: `
+                    <h1 style="text-align: center;">Welcome To <span style="color:red;">Noodle</span><span style="color:#FFD700;">Country</span> Restaurant</h1>
+                    <h3 style="color:#008000; text-align: center;">Booking Confirm</h3><br/>
+                   <p style="text-align: center;">Fullname: <span style="color:#2a37eb">${values.fullname}</span></p>
+                   <p style="text-align: center;">Contact Number: <span style="color:#2a37eb">${values.contactnumber}</span></p>
+                   <p style="text-align: center;">Location: <span style="color:#2a37eb">${values.location}</span></p>
+                   <p style="text-align: center;">Date: <span style="color:#2a37eb">${values.date}</span></p>
+                   <p style="text-align: center;">Time: <span style="color:#2a37eb">${values.time}</span></p>
+                   <p style="text-align: center;">Foodtype: <span style="color:#2a37eb">${values.foodtype}</span></p>
+                   <p style="text-align: center;">Count: <span style="color:#2a37eb">${values.count}</span></p>
                 Best Wishes!!! <br/>
-                NoodleCountry Restaurant
+                <h3><span style="color:red;">Noodle</span><span style="color:#FFD700;">Country</span></h3> -- Restaurant --
                 `,
                     subject: "Booking Confirm",
                     name: `"Hi", ${values.fullname}`,
@@ -97,10 +99,7 @@ export default function BookTable() {
                     navigate("/");
                     toast.success("Booking Successfull");
                     // send mail to user api call
-                    await axios.post(
-                      `${ProductAPI}/auth/sendmail`,
-                      form
-                    );
+                    await axios.post(`${ProductAPI}/auth/sendmail`, form);
                   } catch ({ response: { data } }) {
                     toast.error(data.error);
                   }

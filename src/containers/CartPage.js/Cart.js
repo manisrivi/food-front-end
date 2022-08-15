@@ -78,7 +78,10 @@ export default function Cart() {
     // send mail to user template
     const form = {
       email: email,
-      message: ` <table role="presentation" border="1" cellspacing="1" width="50%">
+      message: ` 
+      <h1 style="text-align: center;">Welcome To <span style="color:red;">Noodle</span><span style="color:#FFD700;">Country</span> Restaurant</h1>
+      <h3 style="color:#008000; text-align: center;">Your Orders</h3> <br/>
+      <table role="presentation" border="1" cellspacing="1" width="50%" style="margin-left: auto; margin-right: auto;">
       <thead>
         <tr>
           <th>Food name</th>
@@ -92,7 +95,7 @@ export default function Cart() {
     </table>
     <br/>
     Best Wishes!!! <br/>
-    NoodleCountry Restaurant
+    <h3><span style="color:red;">Noodle</span><span style="color:yellow;">Country</span></h3> -- Restaurant --
     `,
       subject: "Orders",
       name: `"Hi", ${email}`,

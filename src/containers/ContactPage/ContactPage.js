@@ -62,11 +62,21 @@ export default function ContactPage() {
             }}
             validationSchema={ContactSchema}
             onSubmit={async (values) => {
+              const form = {
+                email: "noodlecountry@gmail.com",
+                message: `<br/>
+                ${values.message} <br/>
+                Best Wishes!!! <br/>
+                NoodleCountry Restaurant
+                `,
+                subject: values.subject,
+                name: `"Hi I'm", ${values.name}`,
+              };
               try {
                 navigate("/");
                 toast.success("Send Successfull");
                 // send mail to user api call
-                await axios.post(`${ProductAPI}/auth/sendmail`, values);
+                await axios.post(`${ProductAPI}/auth/sendmail`, form);
               } catch (error) {}
             }}
           >

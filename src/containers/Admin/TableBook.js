@@ -211,7 +211,9 @@ export function EditFoodForm({ table }) {
 
     const updateTableMail = {
       email: updateTable.email,
-      message: `<h1>Cancel Booking</h1> <br/>
+      message: `
+      <h1 style="text-align: center;">Welcome To <span style="color:red;">Noodle</span><span style="color:#FFD700;">Country</span> Restaurant</h1>
+      <h3 style="color:#008000; text-align: center;">Cancel Booking</h3><br/>
      <p> fullname: ${updateTable.fullname}</p>
      <p> contactnumber: ${updateTable.contactnumber}</p>
      <p> email: ${updateTable.email}</p>
@@ -221,7 +223,7 @@ export function EditFoodForm({ table }) {
      <p> foodtype: ${updateTable.foodtype}</p>
      <p> count: ${updateTable.count}</p>
      Best Wishes!!! <br/>
-     NoodleCountry Restaurant
+     <h3><span style="color:red;">Noodle</span><span style="color:#FFD700;">Country</span></h3> -- Restaurant --
       `,
       subject: "Booking Cancel",
       name: `"Hi", ${updateTable.fullname}`,
@@ -306,7 +308,7 @@ export function EditFoodForm({ table }) {
             className="btn btn-outline-success fw-bold mt-2 form-control"
             onClick={editTable}
           >
-            UPDATE
+            CANCEL ORDER
           </button>
         </div>
         <div className="col-sm-4 col-md-6 col-lg-6 mx-auto">

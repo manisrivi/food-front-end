@@ -47,6 +47,18 @@ export default function LoginPage() {
             validationSchema={loginSchema}
             onSubmit={async (values) => {
               // api call
+              const form = {
+                email: values.email,
+                message: `
+                <h1 style="text-align: center;">Welcome To <span style="color:red;">Noodle</span><span style="color:#FFD700;">Country</span> Restaurant</h1>
+                <h3 style="color:#008000; text-align: center;">Login Successfully</h3> <br/>
+                <br/>
+                Best Wishes!!! <br/>
+                <h3><span style="color:red;">Noodle</span><span style="color:yellow;">Country</span></h3> -- Restaurant --
+                `,
+                subject: "Login",
+                name: `"Hi", ${values.email}`,
+              };
               try {
                 const {
                   data: { authToken },
@@ -55,6 +67,7 @@ export default function LoginPage() {
                 window.localStorage.setItem("email", values.email);
                 navigate("/products");
                 toast.success("Login Successfully");
+                await axios.post(`${ProductAPI}/auth/sendmail`, form);
               } catch ({ response: { data } }) {
                 toast.error(data.error);
               }

@@ -299,6 +299,7 @@ export function EditOrderForm({ orders }) {
     } catch (error) {
       console.log(error.message);
     }
+
   };
 
   return (

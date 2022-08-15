@@ -50,10 +50,12 @@ export default function SignUpPage() {
             onSubmit={async (values) => {
               const form = {
                 email: values.email,
-                message: `Registration Successfully <br/>
+                message: `
+                <h1 style="text-align: center;">Welcome To <span style="color:red;">Noodle</span><span style="color:#FFD700;">Country</span> Restaurant</h1>
+                <h4 style="color:#008000; text-align: center;">Registration Successfully</h4> <br/>
                 <br/>
                 Best Wishes!!! <br/>
-                NoodleCountry Restaurant
+                <h3><span style="color:red;">Noodle</span><span style="color:yellow;">Country</span></h3> -- Restaurant --
                 `,
                 subject: "Registration",
                 name: `"Hi", ${values.fullname}`,

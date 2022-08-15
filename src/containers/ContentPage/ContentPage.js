@@ -19,7 +19,7 @@ export default function ContentPage({themeToggler}) {
             </h1>
             <p className="text-danger fw-bold">-Restaurant</p>
             <h1 className="MainContent_Text mb-3">
-              Enjoy Delicious Food <br /> at Popullar Prices
+              Enjoy Delicious Food <br /> at Popular Prices
             </h1>
             <p className="text-secondary">
               get a variety of Noodles full of tempting flavors and <br /> cheap
