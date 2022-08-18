@@ -7,31 +7,32 @@ import LoginPage from "./containers/LoginPage/LoginPage";
 import SignUpPage from "./containers/SignUpPage/SignUpPage";
 import ContactPage from "./containers/ContactPage/ContactPage";
 import ProductInfo from "./containers/ProductInfo/ProductInfo";
-import Admin from "./containers/Admin/AdminLogin";
+import Admin from "./containers/Admin/AdminCommonFiles/AdminLogin";
 import Cart from "./containers/CartPage.js/Cart";
 import UserNavbar from "./containers/userNavbar/userNavbar";
 import MyOrders, { UserOrdersInfo } from "./containers/MyOrders/MyOrders";
 import Success from "./containers/PaymentSuccess/Success";
-import AdminHome from "./containers/Admin/AdminHome";
-import UserList, { UserInfo } from "./containers/Admin/UserList";
-import FoodList, {
-  AddFoodList,
-  EditFoodList,
-} from "./containers/Admin/FoodList";
-import OrderList, {
-  EditOrderList,
-  OrdersInfo,
-} from "./containers/Admin/OrderList";
-import AdminNavbar from "./containers/Admin/AdminNavbar";
+import AdminHome from "./containers/Admin/AdminCommonFiles/AdminHome";
+import UserList from "./containers/Admin/User/UserList";
+import { UserInfo } from "./containers/Admin/User/UserInfo";
+import FoodList from "./containers/Admin/Food/FoodList";
+import { EditFoodList } from "./containers/Admin/Food/EditFoodList";
+import { AddFoodList } from "./containers/Admin/Food/AddFoodList";
+import OrderList from "./containers/Admin/Order/OrderList";
+import { EditOrderList } from "./containers/Admin/Order/EditOrderList";
+import { OrdersInfo } from "./containers/Admin/Order/OrdersInfo";
+import AdminNavbar from "./containers/Admin/AdminCommonFiles/AdminNavbar";
 import ForgetPassword from "./containers/ForgetPassword/ForgetPassword";
 import ResetPassword from "./containers/ForgetPassword/ResetPassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookTable from "./containers/BookTable/BookTable";
-import TableBook, { EditTableList } from "./containers/Admin/TableBook";
+import TableBook from "./containers/Admin/TableBooking/TableBookList";
+import { EditTableList } from "./containers/Admin/TableBooking/EditTableList";
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "./Global files/themes";
 import { useState } from "react";
+import UserProfileInfo from "./containers/userProfile/UserProfileInfo";
 
 const StyledApp = styled.div`
   color: ${(props) => props.theme.fontColor};
@@ -62,6 +63,7 @@ function App() {
             <Route path="/product/:id" element={<ProductInfo />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/myorders" element={<MyOrders />} />
+            <Route path="/userProfileInfo" element={<UserProfileInfo />}/>
             <Route path="/userOrdersInfo/:id" element={<UserOrdersInfo />} />
             <Route path="/success" element={<Success />} />
             <Route path="/adminHome" element={<AdminHome />} />

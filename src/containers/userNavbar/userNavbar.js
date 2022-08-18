@@ -1,5 +1,5 @@
 // import files
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -47,6 +47,7 @@ export default function UserNavbar() {
                   Noodles
                 </Link>
               </li>
+
               <li class="nav-item dropdown fw-bold text-info MainContent_Text">
                 <span
                   class="nav-link dropdown-toggle text-info"
@@ -63,6 +64,14 @@ export default function UserNavbar() {
                       to="/myorders"
                     >
                       MyOrders
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className="text-decoration-none text-dark MainContent_Text"
+                      to="/userProfileInfo"
+                    >
+                      Profile
                     </Link>
                   </li>
                   <li>

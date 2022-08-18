@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { toast } from "react-toastify";
-import { ProductAPI } from "../../Global files/ProductsAPI";
+import { ProductAPI } from "../../../Global files/ProductsAPI";
 import axios from "axios";
 
 // Admin Login Page
