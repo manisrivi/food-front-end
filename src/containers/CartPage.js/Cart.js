@@ -52,8 +52,8 @@ export default function Cart() {
   const status = "order placed";
 
   // remove from cart
-  const handleRemove = () => {
-    dispatch(removeProduct({ product, price: product.price, quantity, total }));
+  const handleRemove = (index) => {
+    dispatch(removeProduct({index, price: product[index].price, quantity, total }));
   };
 
   // payment function & api call
@@ -127,7 +127,7 @@ export default function Cart() {
                 key={index}
                 delbtn={
                   <button
-                    onClick={handleRemove}
+                    onClick={() => handleRemove(index)}
                     className="btn btn-outline-white border-0 text-danger"
                   >
                     <span

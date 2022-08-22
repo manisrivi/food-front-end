@@ -33,6 +33,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { lightTheme, darkTheme, GlobalStyles } from "./Global files/themes";
 import { useState } from "react";
 import UserProfileInfo from "./containers/userProfile/UserProfileInfo";
+import TestDemo from "./TestDemo";
 
 const StyledApp = styled.div`
   color: ${(props) => props.theme.fontColor};
@@ -84,6 +85,7 @@ function App() {
             <Route path="/booktable" element={<BookTable />} />
             <Route path="tablebook" element={<TableBook />} />
             <Route path="/editTableList/edit/:id" element={<EditTableList />} />
+            <Route path="testdemo" element={<TestDemo/>}/>
           </Routes>
         </StyledApp>
       </ThemeProvider>

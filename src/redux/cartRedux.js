@@ -20,8 +20,8 @@ const cartSlice = createSlice({
     removeProduct: (state, action) => {
       let index = state.products.indexOf(action.payload);
       state.quantity -= 1;
-      state.products.splice(index, 1);
-      state.total -= state.total / action.payload.quantity;
+      state.products.splice(action.payload.index, 1);
+      state.total -= action.payload.price;
     },
   },
 });
