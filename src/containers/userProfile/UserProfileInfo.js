@@ -92,8 +92,20 @@ export default function UserProfileInfo() {
       <UserNavbar />
       <div className="container">
         <div className="row mx-auto mt-3">
+        
           {/* Profile details */}
           <div className="col-sm-4 col-md-6 col-lg-4 mx-auto text-center">
+          <div className="text-center">
+          {isLoading && (
+            <div className="">
+              <img
+              className="w-100"
+                src="https://i.stack.imgur.com/hzk6C.gif"
+                alt=""
+              />
+            </div>
+          )}
+        </div>
             <img src={users.img} alt="" className="w-75 rounded-2" />
             <h5 className="text-danger mt-3">
               Full name:{" "}

@@ -53,7 +53,9 @@ export default function Cart() {
 
   // remove from cart
   const handleRemove = (index) => {
-    dispatch(removeProduct({index, price: product[index].price, quantity, total }));
+    dispatch(
+      removeProduct({ index, price: product[index].price, quantity, total })
+    );
   };
 
   // payment function & api call
@@ -116,7 +118,12 @@ export default function Cart() {
   return (
     <div className="container">
       <UserNavbar />
-
+      {total === 0 ? (
+        <div className="text-center">
+          <h1 className="fw-bold text-success">Cart Empty</h1>
+          <h6>Go to order Noodles</h6>
+          <img className="w-50" src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-2130356-1800917.png" alt="" />
+        </div>) : (
       <div className="row">
         {/* cart list */}
         <div className="col-lg-8">
@@ -166,7 +173,7 @@ export default function Cart() {
             </StripeCheckout>
           </div>
         </div>
-      </div>
+      </div>)}
     </div>
   );
 }
