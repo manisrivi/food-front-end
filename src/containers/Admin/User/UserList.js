@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 
 // All user List
 export default function UserList() {
+  // authToken
+  const adminauthToken = window.localStorage.getItem("adminauthToken");
+
   // navigate to page
   const navigate = useNavigate();
   // user details state management
@@ -18,7 +21,11 @@ export default function UserList() {
   // get users details and api call
   const getUsers = async () => {
     try {
-      const { data } = await axios.get(`${ProductAPI}/users`);
+      const { data } = await axios.get(`${ProductAPI}/users`,{
+        headers: {
+          Authorization: `Bearer ${adminauthToken}`,
+        },
+      });
       setUsers(data);
       setIsLoading(false);
     } catch (error) {
@@ -35,7 +42,11 @@ export default function UserList() {
   const deleteUser = async ({ fullname, _id }) => {
     if (window.confirm(`Are You Sure Delete This User ${fullname}`)) {
       try {
-        await axios.delete(`${ProductAPI}/users/${_id}`, { _id });
+        await axios.delete(`${ProductAPI}/users/${_id}`, {
+          headers: {
+            Authorization: `Bearer ${adminauthToken}`,
+          },
+        });
         alert("Deleted Successfully");
         getUsers();
       } catch (error) {
@@ -94,7 +105,7 @@ export default function UserList() {
                         {u.date} - {u.time}
                       </td>
                       <td className="d-flex gap-2">
-                        <button
+                        {/* <button
                           className="btn btn-outline-white border-0"
                           onClick={() => navigate("/users/" + u._id)}
                         >
@@ -102,7 +113,7 @@ export default function UserList() {
                             class="iconify text-info"
                             data-icon="bi:info-circle-fill"
                           ></span>
-                        </button>
+                        </button> */}
 
                         <button
                           className="btn btn-outline-white border-0"

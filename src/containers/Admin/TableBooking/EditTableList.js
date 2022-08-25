@@ -11,6 +11,9 @@ import { useParams } from "react-router-dom";
 
 
 export function EditTableList() {
+  // authToken
+  const adminauthToken = window.localStorage.getItem("adminauthToken");
+
   // state management
   const { id } = useParams();
   const [table, setTable] = useState(null);
@@ -18,7 +21,11 @@ export function EditTableList() {
   // edit food api call
   const editTable = async () => {
     try {
-      const { data } = await axios.get(`${ProductAPI}/table/${id}`);
+      const { data } = await axios.get(`${ProductAPI}/table/${id}`,{
+        headers: {
+          Authorization: `Bearer ${adminauthToken}`,
+        },
+      });
       setTable(data);
     } catch (error) {
       console.log(error.message);
@@ -28,7 +35,7 @@ export function EditTableList() {
   // useEffect use refresh data
   useEffect(() => {
     editTable();
-  });
+  },[]);
 
   return (
     <div className="container">

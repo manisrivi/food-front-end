@@ -10,6 +10,9 @@ import { useParams } from "react-router-dom";
 // Edit FoodList function
 
 export function EditFoodList() {
+  // authToken
+  const adminauthToken = window.localStorage.getItem("adminauthToken");
+
   // state management
   const { id } = useParams();
   const [food, setFood] = useState(null);
@@ -17,7 +20,11 @@ export function EditFoodList() {
   // edit food api call
   const editFood = async () => {
     try {
-      const { data } = await axios.get(`${ProductAPI}/products/${id}`);
+      const { data } = await axios.get(`${ProductAPI}/products/${id}`, {
+        headers: {
+          Authorization: `Bearer ${adminauthToken}`,
+        },
+      });
       setFood(data);
     } catch (error) {
       console.log(error.message);
@@ -27,7 +34,7 @@ export function EditFoodList() {
   // useEffect use refresh data
   useEffect(() => {
     editFood();
-  });
+  },[]);
 
   return (
     <div className="container">
@@ -97,7 +104,7 @@ export function EditFoodForm({ food }) {
       rating: rating,
       offer: offer,
     };
-    fetch(`${ProductAPI}/products/${food._id}`, {
+    fetch(`${ProductAPI}/products/${food._id}`,{
       method: "PUT",
       body: JSON.stringify(updateFood),
       headers: {
@@ -118,47 +125,54 @@ export function EditFoodForm({ food }) {
             value={name}
             type="text"
             placeholder="name"
-            onChange={(event) => setName(event.target.value)} />
+            onChange={(event) => setName(event.target.value)}
+          />
           {/* image file */}
           <input
             className="mt-2 form-control"
             type="file"
-            onChange={imghandleSubmit} />
+            onChange={imghandleSubmit}
+          />
           {/* iamge link */}
           <input
             className="mt-2 form-control"
             value={image}
             type="text"
             placeholder="Image"
-            onChange={(event) => setImg(event.target.value)} />
+            onChange={(event) => setImg(event.target.value)}
+          />
           {/* description */}
           <input
             className="mt-2 form-control"
             value={desc}
             type="text"
             placeholder="Description"
-            onChange={(event) => setDesc(event.target.value)} />
+            onChange={(event) => setDesc(event.target.value)}
+          />
           {/* price */}
           <input
             className="mt-2 form-control"
             value={price}
             type="number"
             placeholder="Price"
-            onChange={(event) => setPrice(event.target.value)} />
+            onChange={(event) => setPrice(event.target.value)}
+          />
           {/* rating */}
           <input
             className="mt-2 form-control"
             value={rating}
             type="number"
             placeholder="Rating"
-            onChange={(event) => setRating(event.target.value)} />
+            onChange={(event) => setRating(event.target.value)}
+          />
           {/* offer */}
           <input
             className="mt-2 form-control"
             value={offer}
             type="number"
             placeholder="offer"
-            onChange={(event) => setOffer(event.target.value)} />
+            onChange={(event) => setOffer(event.target.value)}
+          />
           {/* submit button */}
           <button
             className="btn btn-outline-success fw-bold mt-2 form-control"
@@ -171,7 +185,8 @@ export function EditFoodForm({ food }) {
           <img
             src="https://www.excelsisdeo.com/images/AlphaTestersAnimation_60.gif"
             className="w-100"
-            alt="" />
+            alt=""
+          />
         </div>
       </div>
     </div>

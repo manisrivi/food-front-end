@@ -8,6 +8,8 @@ import { useNavigate, useParams } from "react-router-dom";
 // user individual Information
 
 export function UserInfo() {
+  // authToken
+  const adminauthToken = window.localStorage.getItem("adminauthToken");
   // navigate to page
   const navigate = useNavigate();
   // user state management
@@ -17,13 +19,19 @@ export function UserInfo() {
   // user info & api call
   const getUserInfo = async () => {
     try {
-      const { data } = await axios.get(`${ProductAPI}/users/${id}`);
+      const { data } = await axios.get(`${ProductAPI}/users/${id}`,{
+        headers: {
+          Authorization: `Bearer ${adminauthToken}`,
+        },
+      });
       setUsers(data);
       console.log(data);
     } catch (error) {
       console.log(error.message);
     }
   };
+
+  console.log(users);
 
   // useEffect use refresh data
   useEffect(() => {

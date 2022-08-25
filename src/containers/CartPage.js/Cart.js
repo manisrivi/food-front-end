@@ -17,24 +17,7 @@ const KEY = process.env.REACT_APP_STRIPE;
 export default function Cart() {
   // authtoken localStorage
   const authToken = window.localStorage.getItem("authToken");
-
-  // get Id from authToken
-  function parseJwt(token) {
-    var base64Url = token.split(".")[1];
-    var base64 = decodeURIComponent(
-      atob(base64Url)
-        .split("")
-        .map((c) => {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join("")
-    );
-    return JSON.parse(base64);
-  }
-
-  let a = parseJwt(authToken);
-  let userId = a._id;
-  let email = a.email;
+  const email = window.localStorage.getItem("email");
 
   // navigate to page
   const navigate = useNavigate();
@@ -64,18 +47,20 @@ export default function Cart() {
     const response = await axios.post(`${ProductAPI}/checkout`, {
       token,
       product,
+    },{
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
     });
 
     // send to orders from db
     await axios.post(
       `${ProductAPI}/orders`,
-      { userId, token, product, total, status },
-      {
+      { token, product, total, status },{
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-      }
-    );
+      });
 
     // send mail to user template
     const form = {
@@ -105,6 +90,7 @@ export default function Cart() {
 
     // navigate to success page
     navigate("/success");
+
     // send Mail api call
     await axios.post(`${ProductAPI}/auth/sendmail`, form);
     if (response === 200) {

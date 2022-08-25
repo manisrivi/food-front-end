@@ -8,31 +8,31 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 
 export default function UserProfileInfo() {
-   // state management
-   const [base64code, setbase64code] = useState("");
-   const [image, setImage] = useState("");
- 
-   // image handle function
-   const imghandleSubmit = (e) => {
-     const files = e.target.files;
-     const file = files[0];
-     getBase64(file);
-   };
- 
-   // image to string converted function
-   const onLoad = (fileString) => {
-     setImage(fileString);
-     setbase64code = fileString;
-   };
- 
-   // Image file reader function
-   const getBase64 = (file) => {
-     let reader = new FileReader();
-     reader.readAsDataURL(file);
-     reader.onload = () => {
-       onLoad(reader.result);
-     };
-   };
+  // state management
+  const [base64code, setbase64code] = useState("");
+  const [image, setImage] = useState("");
+
+  // image handle function
+  const imghandleSubmit = (e) => {
+    const files = e.target.files;
+    const file = files[0];
+    getBase64(file);
+  };
+
+  // image to string converted function
+  const onLoad = (fileString) => {
+    setImage(fileString);
+    setbase64code = fileString;
+  };
+
+  // Image file reader function
+  const getBase64 = (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      onLoad(reader.result);
+    };
+  };
   // navigate to page
   const navigate = useNavigate();
 
@@ -44,37 +44,21 @@ export default function UserProfileInfo() {
   const UserProfileUpdateSchema = Yup.object().shape({
     fullname: Yup.string().required(),
     contactnumber: Yup.number().required().positive().integer(),
-    password: Yup.string().required("Please enter your password"),
-    cPassword: Yup.string()
-      .required("Please retype your password.")
-      .oneOf([Yup.ref("password")], "Your passwords do not match."),
     address: Yup.string().required(),
     img: Yup.string().required(),
   });
 
   // authtoken localStorage
   const authToken = window.localStorage.getItem("authToken");
-  // get Id from authToken
-  function parseJwt(token) {
-    var base64Url = token.split(".")[1];
-    var base64 = decodeURIComponent(
-      atob(base64Url)
-        .split("")
-        .map((c) => {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join("")
-    );
-    return JSON.parse(base64);
-  }
-
-  let a = parseJwt(authToken);
-  let userId = a._id;
 
   // get users details and api call
   const getUserProfile = async () => {
     try {
-      const { data } = await axios.get(`${ProductAPI}/users/${userId}`);
+      const { data } = await axios.get(`${ProductAPI}/users/id`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
       setUsers(data);
       setIsLoading(false);
     } catch (error) {
@@ -92,20 +76,19 @@ export default function UserProfileInfo() {
       <UserNavbar />
       <div className="container">
         <div className="row mx-auto mt-3">
-        
           {/* Profile details */}
           <div className="col-sm-4 col-md-6 col-lg-4 mx-auto text-center">
-          <div className="text-center">
-          {isLoading && (
-            <div className="">
-              <img
-              className="w-100"
-                src="https://i.stack.imgur.com/hzk6C.gif"
-                alt=""
-              />
+            <div className="text-center">
+              {isLoading && (
+                <div className="">
+                  <img
+                    className="w-100"
+                    src="https://i.stack.imgur.com/hzk6C.gif"
+                    alt=""
+                  />
+                </div>
+              )}
             </div>
-          )}
-        </div>
             <img src={users.img} alt="" className="w-75 rounded-2" />
             <h5 className="text-danger mt-3">
               Full name:{" "}
@@ -129,13 +112,11 @@ export default function UserProfileInfo() {
               initialValues={{
                 fullname: "",
                 contactnumber: "",
-                password: "",
-                cPassword: "",
                 address: "",
                 img: "",
               }}
               validationSchema={UserProfileUpdateSchema}
-              onSubmit={async (values, {resetForm}) => {
+              onSubmit={async (values, { resetForm }) => {
                 const form = {
                   email: users.email,
                   message: `
@@ -150,11 +131,16 @@ export default function UserProfileInfo() {
                 };
                 try {
                   // Register api call
-                  await axios.put(`${ProductAPI}/users/${userId}`, values);
+                  await axios.put(`${ProductAPI}/users/id`, values, {
+                    headers: {
+                      Authorization: `Bearer ${authToken}`,
+                    },
+                  });
+
                   // send mail to user api call
                   await axios.post(`${ProductAPI}/auth/sendmail`, form);
                   getUserProfile();
-                  resetForm({ values: "" })
+                  resetForm({ values: "" });
                   toast.success("Profile Updated Successfully");
                 } catch ({ response: { data } }) {
                   toast.error(data.error);
@@ -210,36 +196,6 @@ export default function UserProfileInfo() {
                       *{errors.email}*
                     </span>
                   ) : null}
-
-                  {/* Password */}
-                  <div>
-                    <Field
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      className="form-control"
-                    />
-                  </div>
-                  {errors.password && touched.password ? (
-                    <span className="text-danger text-start">
-                      *{errors.password}*
-                    </span>
-                  ) : null}
-
-                  {/* Confirm Password */}
-                  <div>
-                    <Field
-                      type="password"
-                      name="cPassword"
-                      placeholder="Confirm Password"
-                      className="form-control"
-                    />
-                  </div>
-                  {errors.cPassword && touched.cPassword ? (
-                    <span className="text-danger text-start">
-                      *{errors.cPassword}*
-                    </span>
-                  ) : null}
                   {/* address */}
                   <div>
                     <Field
@@ -257,7 +213,7 @@ export default function UserProfileInfo() {
                   {/* Image file */}
                   <div>
                     <input
-                    type="file"
+                      type="file"
                       className="form-control"
                       onChange={imghandleSubmit}
                     />

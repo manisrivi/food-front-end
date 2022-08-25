@@ -10,6 +10,9 @@ import { useParams } from "react-router-dom";
 // Edit FoodList
 
 export function EditOrderList() {
+    // authToken
+    const adminauthToken = window.localStorage.getItem("adminauthToken");
+
   // state management
   const { id } = useParams();
   const [orders, setOrders] = useState(null);
@@ -17,7 +20,11 @@ export function EditOrderList() {
   // edit orders & api call
   const editOrders = async () => {
     try {
-      const { data } = await axios.get(`${ProductAPI}/orders/${id}`);
+      const { data } = await axios.get(`${ProductAPI}/orders/${id}`,{
+        headers: {
+          Authorization: `Bearer ${adminauthToken}`,
+        },
+      });
       setOrders(data);
     } catch (error) {
       console.log(error.message);
@@ -51,6 +58,9 @@ export function EditOrderList() {
 // Edit order form function
 
 export function EditOrderForm({ orders }) {
+    // authToken
+    const adminauthToken = window.localStorage.getItem("adminauthToken");
+
   // navigate to page
   const navigate = useNavigate();
 
@@ -72,7 +82,11 @@ export function EditOrderForm({ orders }) {
     };
 
     try {
-      await axios.put(`${ProductAPI}/orders/${orders._id}`, updateFood);
+      await axios.put(`${ProductAPI}/orders/${orders._id}`, updateFood,{
+        headers: {
+          Authorization: `Bearer ${adminauthToken}`,
+        },
+      });
       navigate("/orderList");
     } catch (error) {
       console.log(error.message);

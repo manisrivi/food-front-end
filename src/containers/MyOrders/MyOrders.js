@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 
 // my orders page
 export default function MyOrders() {
+
   // authToken
   const authToken = window.localStorage.getItem("authToken");
 
@@ -24,26 +25,14 @@ export default function MyOrders() {
   // Initial Loading Page
   const [isLoading, setIsLoading] = useState(true);
 
-  // get userById from authToken
-  function parseJwt(token) {
-    var base64Url = token.split(".")[1];
-    var base64 = decodeURIComponent(
-      atob(base64Url)
-        .split("")
-        .map((c) => {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join("")
-    );
-    return JSON.parse(base64);
-  }
-  let a = parseJwt(authToken);
-  let userId = a._id;
-
   // get userById Orders
   const getUserById = async () => {
     try {
-      const { data } = await axios.get(`${ProductAPI}/orders/userId/${userId}`);
+      const { data } = await axios.get(`${ProductAPI}/orders/userId/userId`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
       setMyOrders(data);
       setIsLoading(false);
     } catch (error) {
@@ -131,6 +120,7 @@ export default function MyOrders() {
 
 // order info
 export function UserOrdersInfo() {
+  const authToken = window.localStorage.getItem("authToken");
   // navigate to page
   const navigate = useNavigate();
 
@@ -142,7 +132,11 @@ export function UserOrdersInfo() {
   // get order info
   const getOrderInfo = async () => {
     try {
-      const { data } = await axios.get(`${ProductAPI}/orders/${id}`);
+      const { data } = await axios.get(`${ProductAPI}/orders/${id}`,{
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
       setOrders(data);
       setIsLoading(false);
     } catch (error) {

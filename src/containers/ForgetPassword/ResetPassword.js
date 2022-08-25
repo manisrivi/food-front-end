@@ -9,11 +9,14 @@ import { toast } from "react-toastify";
 
 // reset-password
 export default function ResetPassword() {
+
   // navigate to page
   const navigate = useNavigate();
 
   // state management
   const { id, token } = useParams();
+
+  // const authToken = window.localStorage.setItem("authToken", token);
 
   // reset password Schema
   const resetSchema = Yup.object().shape({
@@ -48,9 +51,10 @@ export default function ResetPassword() {
             onSubmit={async (values) => {
               // api call
               try {
+                
                 await axios.post(
                   `${ProductAPI}/auth/reset-password/${id}/${token}`,
-                  values
+                  values,
                 );
                 navigate("/");
                 toast.success("Reset your password successfully");

@@ -10,6 +10,9 @@ import { useParams } from "react-router-dom";
 // user individual orders Information
 
 export function OrdersInfo() {
+    // authToken
+    const adminauthToken = window.localStorage.getItem("adminauthToken");
+
   // navigate to page
   const navigate = useNavigate();
 
@@ -21,7 +24,11 @@ export function OrdersInfo() {
   // get order details and api call
   const getOrderInfo = async () => {
     try {
-      const { data } = await axios.get(`${ProductAPI}/orders/${id}`);
+      const { data } = await axios.get(`${ProductAPI}/orders/${id}`,{
+        headers: {
+          Authorization: `Bearer ${adminauthToken}`,
+        },
+      });
       setOrders(data);
       setIsLoading(false);
     } catch (error) {

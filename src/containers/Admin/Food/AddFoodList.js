@@ -10,6 +10,9 @@ import { formReducer } from "../../../Global files/formReducer";
 // Add Food function
 
 export function AddFoodList() {
+  // authToken
+  const adminauthToken = window.localStorage.getItem("adminauthToken");
+
   // navigate to page
   const navigate = useNavigate();
   // state management
@@ -53,7 +56,11 @@ export function AddFoodList() {
     event.preventDefault();
     try {
       // api call
-      await axios.post(`${ProductAPI}/products`, food);
+      await axios.post(`${ProductAPI}/products`, food,{
+        headers: {
+          Authorization: `Bearer ${adminauthToken}`,
+        },
+      });
       navigate("/foodList");
     } catch (error) {
       console.log(error.message);

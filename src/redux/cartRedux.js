@@ -21,7 +21,7 @@ const cartSlice = createSlice({
       let index = state.products.indexOf(action.payload);
       state.quantity -= 1;
       state.products.splice(action.payload.index, 1);
-      state.total -= action.payload.price;
+      state.total -= action.payload.total / action.payload.quantity;
     },
   },
 });

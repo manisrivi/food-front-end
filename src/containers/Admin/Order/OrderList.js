@@ -10,7 +10,7 @@ import { useEffect } from "react";
 // order List function
 export default function OrderList() {
   // authToken
-  const authToken = window.localStorage.getItem("authToken");
+  const adminauthToken = window.localStorage.getItem("adminauthToken");
   // navigate to page
   const navigate = useNavigate();
   // user details state management
@@ -21,9 +21,9 @@ export default function OrderList() {
   // get users details and api call
   const getUsers = async () => {
     try {
-      const { data } = await axios.get(`${ProductAPI}/orders`, {
+      const { data } = await axios.get(`${ProductAPI}/orders`,{
         headers: {
-          Authorization: `Bearer ${authToken}`,
+          Authorization: `Bearer ${adminauthToken}`,
         },
       });
       setUsers(data);
@@ -33,11 +33,16 @@ export default function OrderList() {
     }
   };
 
+
   // delete user
   const deleteOrder = async ({ _id }) => {
     if (window.confirm(`Are You Sure Delete This order`)) {
       try {
-        await axios.delete(`${ProductAPI}/orders/${_id}`, { _id });
+        await axios.delete(`${ProductAPI}/orders/${_id}`,{
+          headers: {
+            Authorization: `Bearer ${adminauthToken}`,
+          },
+        });
         alert("Deleted Successfully");
         getUsers();
       } catch (error) {
@@ -92,7 +97,7 @@ export default function OrderList() {
             )}
             <tbody className="bg-light">
               {users
-                .filter((g) => g.token.card.name.toLowerCase().includes(query))
+                // .filter((g) => g.token.card.name.toLowerCase().includes(query))
                 .map((u, index) => {
                   return (
                     <tr key={index}>

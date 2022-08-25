@@ -9,6 +9,9 @@ import { useEffect } from "react";
 
 // Food List
 export default function FoodList() {
+    // authToken
+  const adminauthToken = window.localStorage.getItem("adminauthToken");
+  
   const [query, setQuery] = useState("");
   // navigate to page
   const navigate = useNavigate();
@@ -20,7 +23,11 @@ export default function FoodList() {
   const getFoodList = async () => {
     try {
       // api call & state management
-      const { data } = await axios.get(`${ProductAPI}/products`);
+      const { data } = await axios.get(`${ProductAPI}/products`,{
+        headers: {
+          Authorization: `Bearer ${adminauthToken}`,
+        },
+      });
       setFoodList(data);
       setIsLoading(false);
     } catch (error) {
