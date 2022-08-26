@@ -17,7 +17,7 @@ export function AddFoodList() {
   const navigate = useNavigate();
   // state management
   const [base64code, setbase64code] = useState("");
-  const [image, setImage] = useState("");
+  const [img, setImg] = useState("");
 
   // image handle function
   const imghandleSubmit = (e) => {
@@ -28,7 +28,7 @@ export function AddFoodList() {
 
   // image to string converted function
   const onLoad = (fileString) => {
-    setImage(fileString);
+    setImg(fileString);
     setbase64code = fileString;
   };
 
@@ -42,21 +42,28 @@ export function AddFoodList() {
   };
 
   // form initialValues
-  const [food, setFood] = useReducer(formReducer, {
-    name: "",
-    desc: "",
-    img: image,
-    price: "",
-    rating: "",
-    offer: "",
-  });
+  const [name, setName] = useState("");
+  const [desc, setDesc] = useState("");
+  const [price,setPrice] = useState("");
+  const [rating, setRating] = useState("");
+  const [offer, setOffer] = useState("");
+  const [category, setCategory] = useState("");
 
   // form submit
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const formValues = {
+      name,
+      desc,
+      img,
+      price,
+      rating,
+      offer,
+      category,
+    }
     try {
       // api call
-      await axios.post(`${ProductAPI}/products`, food,{
+      await axios.post(`${ProductAPI}/products`, formValues,{
         headers: {
           Authorization: `Bearer ${adminauthToken}`,
         },
@@ -86,7 +93,8 @@ export function AddFoodList() {
                 id="name"
                 required
                 className="form-control"
-                onChange={setFood} />
+                onChange={(e) => setName(e.target.value)}
+                />
             </div>
             {/*  description */}
             <div>
@@ -97,7 +105,8 @@ export function AddFoodList() {
                 placeholder="Description"
                 id="desc"
                 required
-                onChange={setFood} />
+                onChange={(e) => setDesc(e.target.value)}
+                />
             </div>
             {/* Base64 */}
             <div>
@@ -106,18 +115,6 @@ export function AddFoodList() {
                 className="form-control"
                 required
                 onChange={imghandleSubmit} />
-            </div>
-            {/* Image */}
-            <div>
-              <input
-                type="text"
-                name="img"
-                placeholder=""
-                className="form-control"
-                id="img"
-                value={image}
-                onChange={setFood}
-                required />
             </div>
             {/* Price */}
             <div>
@@ -128,7 +125,8 @@ export function AddFoodList() {
                 className="form-control"
                 id="price"
                 required
-                onChange={setFood} />
+                onChange={(e) => setPrice(e.target.value)}
+                />
             </div>
             {/*  Rating */}
             <div>
@@ -139,7 +137,8 @@ export function AddFoodList() {
                 className="form-control"
                 id="rating"
                 required
-                onChange={setFood} />
+                onChange={(e) => setRating(e.target.value)}
+                />
             </div>
             {/*  offer */}
             <div>
@@ -150,8 +149,22 @@ export function AddFoodList() {
                 className="form-control"
                 id="offer"
                 required
-                onChange={setFood} />
+                onChange={(e) => setOffer(e.target.value)}
+                />
             </div>
+              {/* category */}
+          <select
+            className="mt-2 form-control"
+            name="category"
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option>Chicken</option>
+            <option>Fish</option>
+            <option>Kids</option>
+            <option>Green</option>
+            <option>Pasta</option>
+            <option>Soup</option>
+          </select>
             {/* submit Button */}
             <button
               type="submit"

@@ -62,7 +62,7 @@ export function EditFoodForm({ food }) {
   const navigate = useNavigate();
   // state management
   const [base64code, setbase64code] = useState("");
-  const [image, setImage] = useState("");
+  const [img, setImg] = useState("");
 
   // image handle function
   const imghandleSubmit = (e) => {
@@ -73,7 +73,7 @@ export function EditFoodForm({ food }) {
 
   // image file converted to string
   const onLoad = (fileString) => {
-    setImage(fileString);
+    setImg(fileString);
     setbase64code = fileString;
   };
 
@@ -88,11 +88,11 @@ export function EditFoodForm({ food }) {
 
   // state management
   const [name, setName] = useState(food.name);
-  const [img, setImg] = useState(food.img);
   const [desc, setDesc] = useState(food.desc);
   const [price, setPrice] = useState(food.price);
   const [rating, setRating] = useState(food.rating);
   const [offer, setOffer] = useState(food.offer);
+  const [category, setCategory] = useState(food.category);
 
   // edit food update form and api call
   const editfood = () => {
@@ -103,6 +103,7 @@ export function EditFoodForm({ food }) {
       price: price,
       rating: rating,
       offer: offer,
+      category: category,
     };
     fetch(`${ProductAPI}/products/${food._id}`,{
       method: "PUT",
@@ -132,14 +133,6 @@ export function EditFoodForm({ food }) {
             className="mt-2 form-control"
             type="file"
             onChange={imghandleSubmit}
-          />
-          {/* iamge link */}
-          <input
-            className="mt-2 form-control"
-            value={image}
-            type="text"
-            placeholder="Image"
-            onChange={(event) => setImg(event.target.value)}
           />
           {/* description */}
           <input
@@ -173,6 +166,19 @@ export function EditFoodForm({ food }) {
             placeholder="offer"
             onChange={(event) => setOffer(event.target.value)}
           />
+             {/* category */}
+             <select
+            className="mt-2 form-control"
+            value={category}
+            onChange={(event) => setCategory(event.target.value)}
+          >
+            <option>Chicken</option>
+            <option>Fish</option>
+            <option>Kids</option>
+            <option>Green</option>
+            <option>Pasta</option>
+            <option>Soup</option>
+          </select>
           {/* submit button */}
           <button
             className="btn btn-outline-success fw-bold mt-2 form-control"

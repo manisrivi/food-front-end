@@ -56,6 +56,8 @@ export default function ProductInfo() {
     toast.success("added to Cart");
   };
 
+
+
   return (
     <div className="container">
       <UserNavbar />
@@ -63,7 +65,7 @@ export default function ProductInfo() {
         <div className="row gap-2 m-2">
           {/*product Image */}
           <div className="col-sm-6">
-            <img src={product.img} className="w-100" alt="" />
+            <img src={product.img?.url} className="w-100" alt="" />
           </div>
           {/* Product Information */}
           <div className="col mt-5">

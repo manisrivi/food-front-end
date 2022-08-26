@@ -45,7 +45,7 @@ export default function UserProfileInfo() {
     fullname: Yup.string().required(),
     contactnumber: Yup.number().required().positive().integer(),
     address: Yup.string().required(),
-    img: Yup.string().required(),
+    // img: Yup.string().required(),
   });
 
   // authtoken localStorage
@@ -89,7 +89,7 @@ export default function UserProfileInfo() {
                 </div>
               )}
             </div>
-            <img src={users.img} alt="" className="w-75 rounded-2" />
+            <img src={users.img?.url} alt="" className="w-75 rounded-2" />
             <h5 className="text-danger mt-3">
               Full name:{" "}
               <span className="text-secondary">{users.fullname}</span>
@@ -113,10 +113,15 @@ export default function UserProfileInfo() {
                 fullname: "",
                 contactnumber: "",
                 address: "",
-                img: "",
               }}
               validationSchema={UserProfileUpdateSchema}
               onSubmit={async (values, { resetForm }) => {
+                const formValues = {
+                  fullname: values.fullname,
+                  contactnumber: values.contactnumber,
+                  address: values.address,
+                  img: image
+                }
                 const form = {
                   email: users.email,
                   message: `
@@ -131,7 +136,7 @@ export default function UserProfileInfo() {
                 };
                 try {
                   // Register api call
-                  await axios.put(`${ProductAPI}/users/id`, values, {
+                  await axios.put(`${ProductAPI}/users/id`, formValues, {
                     headers: {
                       Authorization: `Bearer ${authToken}`,
                     },
@@ -218,21 +223,6 @@ export default function UserProfileInfo() {
                       onChange={imghandleSubmit}
                     />
                   </div>
-
-                  {/* Image */}
-                  <div>
-                    <Field
-                      className="form-control"
-                      name="img"
-                      placeholder="Image"
-                      value={image}
-                    />
-                  </div>
-                  {errors.img && touched.img ? (
-                    <span className="text-danger text-start">
-                      *{errors.img}*
-                    </span>
-                  ) : null}
 
                   {/* submit Button */}
                   <button

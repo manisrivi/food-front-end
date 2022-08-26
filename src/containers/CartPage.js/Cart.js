@@ -170,7 +170,7 @@ function CartTemplate({ img, _id, name, quantity, price, delbtn }) {
     <div className="col-sm-5 col-md-6 MainContent_Text">
       <div class="card border-0 shadow-lg rounded-3 mx-auto text-center m-2">
         <div className="text-center">
-          <img src={img} class="card-img-top w-50" alt="..." />
+          <img src={img.url} class="card-img-top w-50" alt="..." />
         </div>
         <div class="card-body">
           <h6 className="fw-bold text-secondary"> Name: {name}</h6>

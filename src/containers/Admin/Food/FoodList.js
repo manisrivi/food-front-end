@@ -101,7 +101,7 @@ export default function FoodList() {
                 return (
                   <tr key={index}>
                     <td>
-                      <img src={u.img} alt="" className="w-25" />
+                      <img src={u.img.url} alt="" className="w-25" />
                     </td>
                     <td className="text-start">{u._id}</td>
                     <td className="text-start">{u.name}</td>
