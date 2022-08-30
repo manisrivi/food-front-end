@@ -97,7 +97,7 @@ export default function OrderList() {
             )}
             <tbody className="bg-light">
               {users
-                // .filter((g) => g.token.card.name.toLowerCase().includes(query))
+                 .filter((g) => g.token.card.name.toLowerCase().includes(query))
                 .map((u, index) => {
                   return (
                     <tr key={index}>
